@@ -16,14 +16,15 @@
                <children>
                   <AnchorPane layoutX="153.0" layoutY="47.0" prefHeight="306.0" prefWidth="305.0" style="-fx-background-color: fa9c1b;">
                      <children>
-                        <TextField id="EmailTF" layoutX="71.0" layoutY="109.0" />
+                        <TextField id="emailText" fx:id="emailText" layoutX="71.0" layoutY="109.0" />
                         <Button fx:id="loginButton" layoutX="120.0" layoutY="210.0" mnemonicParsing="false" style="-fx-background-color: ffffff;" text="Login" />
                         <Text fill="WHITE" layoutX="120.0" layoutY="64.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Login" wrappingWidth="65.4700927734375">
                            <font>
                               <Font size="20.0" />
                            </font>
                         </Text>
-                        <PasswordField id="PasswordTF" layoutX="71.0" layoutY="153.0" />
+                        <PasswordField id="pwdText" fx:id="pwdText" layoutX="71.0" layoutY="153.0" />
+                        <Button fx:id="signButton" layoutX="120.0" layoutY="251.0" mnemonicParsing="false" style="-fx-background-color: ffffff;" text="SignIn" />
                      </children>
                   </AnchorPane>
                </children>
