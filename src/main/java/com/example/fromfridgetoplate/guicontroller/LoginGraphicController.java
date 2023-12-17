@@ -18,6 +18,8 @@ public class LoginGraphicController implements Initializable {
     @FXML
     private Button loginButton;
     @FXML
+    private Button signInButton;
+    @FXML
     private TextField emailText;
     @FXML
     private PasswordField pwdText;
@@ -54,6 +56,13 @@ public class LoginGraphicController implements Initializable {
 
             } catch (IOException e) {
                 throw new RuntimeException(e);
+            }
+        });
+        signInButton.setOnMouseClicked(event -> {
+            try {
+                navigator.goTo("chooseUserPage.fxml"); /*qui devo mettere la schermata per scegliere il tipo di user che si vuole registrare*/
+            }catch(IOException e){
+                throw new RuntimeException(e); /*non va bene, dovrebbe essere un'eccezione definita da me*/
             }
         });
     }
