@@ -1,4 +1,4 @@
-package com.example.fromfridgetoplate.guicontroller;
+package com.example.fromfridgetoplate.guicontrollers;
 
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -26,10 +26,10 @@ public class Navigator {
         stage.setScene(scene);
         stage.show();
     }
-    public void setLoginPage(String fxmlString) throws IOException{
+    public void setMainPage(String fxmlString) throws IOException{
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(fxmlString));
         Scene scene = new Scene(fxmlLoader.load(), 600, 400);
-        stage.setTitle("Prova");
+        stage.setTitle("From Fridge To Plate");
         stage.setScene(scene);
         stage.show();
     }

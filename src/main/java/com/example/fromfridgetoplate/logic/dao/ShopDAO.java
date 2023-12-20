@@ -5,15 +5,16 @@ import java.sql.Connection;
 import java.sql.SQLException;
 
 public class ShopDAO {
-    public boolean saveShop(String email, String password, String name, String VATnumber, String address){
+    public boolean saveShop(String email, String password, String name, String VATnumber, String address, String phoneNumber){
         Connection connection = SingletonConnector.getInstance().getConnection();
 
-        try(CallableStatement cs = connection.prepareCall("{call registerShop(?,?,?,?,?)}")){
+        try(CallableStatement cs = connection.prepareCall("{call registerShop(?,?,?,?,?,?)}")){
             cs.setString(1,email);
             cs.setString(2,password);
             cs.setString(3,name);
             cs.setString(4,VATnumber);
             cs.setString(5,address);
+            cs.setString(6, phoneNumber);
             cs.executeQuery();
         }catch(SQLException e){
             e.printStackTrace();

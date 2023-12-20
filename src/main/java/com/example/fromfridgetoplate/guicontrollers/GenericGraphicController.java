@@ -1,8 +1,7 @@
-package com.example.fromfridgetoplate.guicontroller;
+package com.example.fromfridgetoplate.guicontrollers;
 
 import javafx.fxml.Initializable;
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 
 import java.io.IOException;
@@ -26,7 +25,7 @@ public class GenericGraphicController implements Initializable {
 
         homeButton.setOnMouseClicked(event -> {
             try {
-                navigator.goTo("homePage.fxml");
+                navigator.goTo("clientHomePage.fxml");
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
@@ -34,14 +33,14 @@ public class GenericGraphicController implements Initializable {
 /*
         aboutButton.setOnMouseClicked(event -> {
             try {
-                navigator.goTo("guicontroller/aboutPage.fxml");
+                navigator.goTo("guicontrollers/aboutPage.fxml");
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
         }); */
         profileButton.setOnMouseClicked(event -> {
             try {
-                navigator.goTo("guicontroller/profilePage.fxml");
+                navigator.goTo("guicontrollers/profilePage.fxml");
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }

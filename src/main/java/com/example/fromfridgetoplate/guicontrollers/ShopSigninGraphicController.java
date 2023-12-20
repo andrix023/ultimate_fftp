@@ -1,4 +1,4 @@
-package com.example.fromfridgetoplate.guicontroller;
+package com.example.fromfridgetoplate.guicontrollers;
 
 import com.example.fromfridgetoplate.logic.bean.RegistrationBean;
 import com.example.fromfridgetoplate.logic.control.RegisterController;
@@ -13,17 +13,20 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class ClientSignInGraphicController implements Initializable {
+public class ShopSigninGraphicController implements Initializable {
     @FXML
     private TextField emailText;
     @FXML
     private TextField passwordText;
     @FXML
     private TextField nameText;
-    @FXML
-    private TextField surnameText;
+
     @FXML
     private TextField addressText;
+    @FXML
+    private TextField VTAnumberText;
+    @FXML
+    private TextField phoneText;
     @FXML
     private Button signInButton;
 
@@ -34,22 +37,22 @@ public class ClientSignInGraphicController implements Initializable {
                            ResourceBundle resources) {
         signInButton.setOnMouseClicked(event -> {
             RegistrationBean registrationBean;
-            if (emailText.getText().isEmpty() || passwordText.getText().isEmpty() || nameText.getText().isEmpty() || surnameText.getText().isEmpty() || addressText.getText().isEmpty()) {
+            if (emailText.getText().isEmpty() || passwordText.getText().isEmpty() || nameText.getText().isEmpty() || addressText.getText().isEmpty() || VTAnumberText.getText().isEmpty()|| phoneText.getText().isEmpty()) {
                 Alert alert = new Alert(Alert.AlertType.WARNING, "Complete the field before!");
                 alert.showAndWait();
-                return;
             }
             else{
-                registrationBean = new RegistrationBean(emailText.getText(), passwordText.getText(),nameText.getText(), surnameText.getText(),addressText.getText(), Role.CLIENT);
+                registrationBean = new RegistrationBean(emailText.getText(), passwordText.getText(),nameText.getText(),addressText.getText(), VTAnumberText.getText(), phoneText.getText(), Role.OWNER);
                 RegisterController registerController = new RegisterController();
                 if(registerController.register(registrationBean)){
                     try {
                         navigator.goTo("loginPage.fxml");
                     }catch (IOException e){
-                        throw new RuntimeException();
+                        e.printStackTrace();
                     }
                 }
             }
         });
     }
 }
+

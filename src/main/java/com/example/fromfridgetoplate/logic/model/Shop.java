@@ -5,13 +5,20 @@ public class Shop extends User {
 
     private String address;
     private String VATnumber;
+    private String phoneNumber;
 
-    public Shop(String email, String password, String name, String address, String VATnumber) {
-        super(email, password);
+
+
+    public Shop(String email, String password, String name, String address, String VATnumber, String phoneNumber) {
+        super(email,password);
         this.name = name;
-
         this.address = address;
-        this.VATnumber = VATnumber; /*sarebbe la partita IVA*/
+        this.VATnumber = VATnumber;
+        this.phoneNumber = phoneNumber;
+    }
+
+    public String getPhoneNumber() {
+        return phoneNumber;
     }
 
     public String getName() {

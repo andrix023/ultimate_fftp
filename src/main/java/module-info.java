@@ -4,6 +4,6 @@ module com.example.fromfridgetoplate {
     requires java.sql;
 
 
-    opens com.example.fromfridgetoplate.guicontroller to javafx.fxml;
-    exports com.example.fromfridgetoplate.guicontroller;
+    opens com.example.fromfridgetoplate.guicontrollers to javafx.fxml;
+    exports com.example.fromfridgetoplate.guicontrollers;
 }

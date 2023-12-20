@@ -1,0 +1,6 @@
+.anchor {
+    -fx-background-image: url('images/chefFinal.png');
+    -fx-background-size: cover; /* o 'contain', senno cover, il primo rimane fisso, il secondo riempe la finestra se la si ridemnsiona */
+    -fx-background-repeat: no-repeat;
+    -fx-background-position: center center;
+}

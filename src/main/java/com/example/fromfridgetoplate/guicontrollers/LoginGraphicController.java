@@ -1,4 +1,4 @@
-package com.example.fromfridgetoplate.guicontroller;
+package com.example.fromfridgetoplate.guicontrollers;
 
 import com.example.fromfridgetoplate.logic.bean.UserBean;
 import com.example.fromfridgetoplate.logic.control.LoginController;
@@ -45,17 +45,17 @@ public class LoginGraphicController implements Initializable {
             try {
 
                 if(loggedUser.getRole() == Role.CLIENT) {
-                    navigator.goTo("homePage.fxml");
+                    navigator.goTo("clientHomePage.fxml");
                 }
                 if(loggedUser.getRole() == Role.RIDER) {
                     /* goto rider homepage*/
                 }
                 if(loggedUser.getRole() == Role.OWNER){
-                    /* goto shop owner homepage*/
+                    navigator.goTo("resellerMainPage2.fxml");
                 }
 
             } catch (IOException e) {
-                throw new RuntimeException(e);
+               e.printStackTrace();
             }
         });
         signInButton.setOnMouseClicked(event -> {

@@ -1,4 +1,4 @@
-package com.example.fromfridgetoplate.guicontroller;
+package com.example.fromfridgetoplate.guicontrollers;
 
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -32,14 +32,16 @@ public class ChooseUserGraphicController implements Initializable {
                     throw new RuntimeException(e);  /*qui dovremmo fare un'eccezzione nostra, non usare quella a runtime*/
                 }
             } else if (ownerButton.isSelected()) {
-                /* todo
-                  registrazione di uno shop owner
-                  */
+                try {
+                    navigator.goTo("shopOwnerSigninPage.fxml");
+                } catch (IOException e) {
+                    throw new RuntimeException(e);  /*qui dovremmo fare un'eccezzione nostra, non usare quella a runtime*/
+                }
             }
         });
         backButton.setOnMouseClicked(event ->{
             try {
-                navigator.goTo("loginPage.fxml");
+                navigator.goTo("mainPage6.fxml");
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }

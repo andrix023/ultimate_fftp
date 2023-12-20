@@ -14,7 +14,7 @@ public class SingletonConnector {
 
     private SingletonConnector() {
 
-        try (InputStream is = new FileInputStream("src/main/java/com/example/fromfridgetoplate/logic/dao/db_config.properties")){
+        try (InputStream is = new FileInputStream("src/main/resources/com/example/Properties/db_config.properties")){
             Properties prop = new Properties();
 
             prop.load(is);
