@@ -1,5 +1,7 @@
 package com.example.fromfridgetoplate.logic.model;
 
+import com.example.fromfridgetoplate.logic.bean.UserBean;
+
 public class Session {
     private final User user;
     private static Session session = null;
@@ -22,4 +24,5 @@ public class Session {
     public User getUser() {
         return user;
     }
+    public UserBean getUserBean(){return new UserBean(user.getRole());}
 }

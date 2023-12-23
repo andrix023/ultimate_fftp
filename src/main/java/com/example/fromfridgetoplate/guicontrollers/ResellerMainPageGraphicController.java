@@ -10,8 +10,10 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 
+import java.io.IOException;
 
-    public class ResellerMainPageGraphicController {
+
+public class ResellerMainPageGraphicController extends GenericGraphicController {
         @FXML
         private ImageView pendingOrdersImg;
 
@@ -25,29 +27,15 @@ import javafx.stage.Stage;
         private ImageView viewStatusImg;
 
         @FXML
-        void onViewOrdersClicked(MouseEvent event) {
-            try {
-                // Carica il file FXML per la nuova scena
-                FXMLLoader loader = new FXMLLoader(getClass().getResource("viewPendingOrders.fxml"));
-                Parent newRoot = loader.load(); // Carica il nuovo nodo radice
-
-                // Ottiene lo Stage corrente dall'evento, cioè aver cliccato il bottone
-                Stage currentStage = (Stage)((Node)event.getSource()).getScene().getWindow();
-
-                // Imposta la nuova scena sullo Stage
-                Scene newScene = new Scene(newRoot);
-                currentStage.setScene(newScene);
-                currentStage.show();
-            } catch (Exception e) {
-                e.printStackTrace();
-                // Gestire l'eccezione, ad esempio mostrando un messaggio di errore
-            }
+        void onClick(MouseEvent event) throws IOException {
+            Node sourceNode = (Node) event.getSource() ;
+           if(sourceNode == pendingOrdersImg){
+               navigator.goTo("viewPendingOrders.fxml");
+           } else if (sourceNode == viewStatusImg) {
+               // navigator.goTo(la view di viewStatus);
+           }
         }
 
-        @FXML
-        void onViewStatusClicked(MouseEvent event) {
-            // Logica esistente per il click
-        }
 
         @FXML // bo?
         void zoom(MouseEvent event) {

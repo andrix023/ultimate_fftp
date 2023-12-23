@@ -1,5 +1,7 @@
 package com.example.fromfridgetoplate.guicontrollers;
 
+import com.example.fromfridgetoplate.logic.model.Role;
+import com.example.fromfridgetoplate.logic.model.Session;
 import javafx.fxml.Initializable;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -13,8 +15,7 @@ public class GenericGraphicController implements Initializable {
     private Button profileButton;
     @FXML
     private Button homeButton;
-    @FXML
-    private Button aboutButton;
+
     Navigator navigator = Navigator.getInstance(null);
 
 
@@ -25,7 +26,12 @@ public class GenericGraphicController implements Initializable {
 
         homeButton.setOnMouseClicked(event -> {
             try {
-                navigator.goTo("clientHomePage.fxml");
+                if(Session.getSession().getUserBean().getRole() == Role.CLIENT) {
+                    navigator.goTo("clientHomePage.fxml");
+                }
+                else if(Session.getSession().getUserBean().getRole() == Role.OWNER){
+                    navigator.goTo("resellerMainPage2.fxml");
+                }
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
@@ -39,8 +45,13 @@ public class GenericGraphicController implements Initializable {
             }
         }); */
         profileButton.setOnMouseClicked(event -> {
-            try {
-                navigator.goTo("guicontrollers/profilePage.fxml");
+            try {  if(Session.getSession().getUser().getRole() == Role.CLIENT) {    //qui non so se andrebbe bene anche getUser()
+                navigator.goTo("profilePage.fxml"); //non esiste lol
+            }
+            else if(Session.getSession().getUser().getRole() == Role.OWNER){
+                ShopProfileGraphicController shopProfileGraphicController = new ShopProfileGraphicController();
+                navigator.goTo("shopProfilePage.fxml");
+            }
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }

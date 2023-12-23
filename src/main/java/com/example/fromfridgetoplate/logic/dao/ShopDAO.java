@@ -1,7 +1,11 @@
 package com.example.fromfridgetoplate.logic.dao;
 
+import com.example.fromfridgetoplate.logic.bean.ShopBean;
+import com.example.fromfridgetoplate.logic.model.Shop;
+
 import java.sql.CallableStatement;
 import java.sql.Connection;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class ShopDAO {
@@ -20,5 +24,20 @@ public class ShopDAO {
             e.printStackTrace();
         }
         return true; /*potrei farlo meglio, non sono neanche sicurissimo sia corretto far tornare un booleano*/
+    }
+    public Shop retrieveShopByEmail(String email){
+        Connection connection = SingletonConnector.getInstance().getConnection();
+        Shop shop = null;
+        try(CallableStatement cs = connection.prepareCall("{call retrieveShopByEmail(?)}")){
+            cs.setString(1, email);
+            cs.execute();
+            ResultSet rs = cs.getResultSet();
+            while(rs.next()){
+                 shop = new Shop(rs.getString(1), rs.getString(3), rs.getString(4), rs.getString(2), rs.getString(5) );
+            }
+        }catch(SQLException e){
+            e.printStackTrace();
+        }
+        return shop;
     }
 }
