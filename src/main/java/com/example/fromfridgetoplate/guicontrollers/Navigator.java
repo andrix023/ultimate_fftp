@@ -22,13 +22,13 @@ public class Navigator {
     }
     public void goTo(String fxmlString) throws IOException {
         Parent fxmlLoader = FXMLLoader.load(Objects.requireNonNull(getClass().getResource(fxmlString)));
-        Scene scene = new Scene(fxmlLoader);
+        Scene scene = new Scene(fxmlLoader, 800, 800);
         stage.setScene(scene);
         stage.show();
     }
     public void setMainPage(String fxmlString) throws IOException{
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(fxmlString));
-        Scene scene = new Scene(fxmlLoader.load(), 600, 400);
+        Scene scene = new Scene(fxmlLoader.load(), 800, 800);
         stage.setTitle("From Fridge To Plate");
         stage.setScene(scene);
         stage.show();

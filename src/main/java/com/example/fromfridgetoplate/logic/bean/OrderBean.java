@@ -1,7 +1,7 @@
 package com.example.fromfridgetoplate.logic.bean;
 
 
-import com.example.fromfridgetoplate.logic.model.FoodItem;
+import com.example.fromfridgetoplate.logic.model.Food_item;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -9,8 +9,11 @@ import java.util.List;
 public class OrderBean {
     private int orderId;
     private int customerId;
-    private List<FoodItem> foodItems; // food_item alias ingrediente, ancora da definire
+    private List<Food_item> foodItems; // food_item alias ingrediente, ancora da definire
     private LocalDateTime orderTime;
+    private String shippingCity;
+
+
 
     // Costruttore
     public OrderBean() {
@@ -34,11 +37,11 @@ public class OrderBean {
         this.customerId = customerId;
     }
 
-    public List<FoodItem> getFoodItems() {
+    public List<Food_item> getFoodItems() {
         return foodItems;
     }
 
-    public void setFoodItems(List<FoodItem> foodItems) {
+    public void setFoodItems(List<Food_item> foodItems) {
         this.foodItems = foodItems;
     }
 
@@ -50,5 +53,11 @@ public class OrderBean {
         this.orderTime = orderTime;
     }
 
-    // Altri metodi utili
+    public String getShippingCity() {
+        return shippingCity;
+    }
+
+    public void setShippingCity(String shippingCity) {
+        this.shippingCity = shippingCity;
+    }
 }

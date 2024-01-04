@@ -6,4 +6,6 @@ module com.example.fromfridgetoplate {
 
     opens com.example.fromfridgetoplate.guicontrollers to javafx.fxml;
     exports com.example.fromfridgetoplate.guicontrollers;
+
+    opens com.example.fromfridgetoplate.logic.bean to javafx.base;
 }

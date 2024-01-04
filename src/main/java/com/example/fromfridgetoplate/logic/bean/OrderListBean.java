@@ -1,5 +1,11 @@
 package com.example.fromfridgetoplate.logic.bean;
 
+import com.example.fromfridgetoplate.logic.control.PendingOrdersController;
+import com.example.fromfridgetoplate.logic.dao.OrderDAO;
+import com.example.fromfridgetoplate.logic.model.OrderList;
+import com.example.fromfridgetoplate.patterns.factory.DAOFactory;
+import javafx.application.Platform;
+
 import java.util.List;
 
 public class OrderListBean {
@@ -19,6 +25,17 @@ public class OrderListBean {
         this.orderBeans = orderBeans;
     }
 
-    // Eventuali altri metodi utili per la gestione della lista di ordini,
-    // come metodi per aggiungere o rimuovere ordini, ecc.
+
+    public void refreshOrders() {
+        PendingOrdersController poc = new PendingOrdersController();
+        OrderListBean updatedOrderList = poc.getPendingOrderListBean();
+        this.setOrderBeans(updatedOrderList.getOrderBeans());
+    }
+
+
+        // Eventuali altri metodi utili per la gestione della lista di ordini,
+        // come metodi per aggiungere o rimuovere ordini, ecc.
+
+
+
 }

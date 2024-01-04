@@ -30,7 +30,7 @@ public class ResellerMainPageGraphicController extends GenericGraphicController 
         void onClick(MouseEvent event) throws IOException {
             Node sourceNode = (Node) event.getSource() ;
            if(sourceNode == pendingOrdersImg){
-               navigator.goTo("viewPendingOrders.fxml");
+               navigator.goTo("viewPendingOrders2.fxml");
            } else if (sourceNode == viewStatusImg) {
                // navigator.goTo(la view di viewStatus);
            }

@@ -15,7 +15,7 @@ public class Order {
 
     private String status; // "Pending", "Accepted", "Delivered"........altri?
 
-    private List<FoodItem> foodItems; // Una lista degli ingredienti alimentari ordinati
+    private List<Food_item> foodItems; // Una lista degli ingredienti alimentari ordinati
 
     private LocalDateTime orderTime;
 
@@ -23,9 +23,14 @@ public class Order {
 
     private boolean isAcceptedByRider;
 
+    private String shippingStreet;
+    private int shippingStreetNumber;
+    private String shippingCity;
+    private String shippingProvince;
+
 
     // Costruttore
-    public Order(int orderId, int customerId, int retailerId, List<FoodItem> items, LocalDateTime orderTime, LocalDateTime deliveryTime) {
+    public Order(int orderId, int customerId, int retailerId, List<Food_item> items, LocalDateTime orderTime, LocalDateTime deliveryTime) {
         this.orderId = orderId;
         this.customerId = customerId;
         this.retailerId = retailerId;
@@ -76,11 +81,11 @@ public class Order {
         this.status = status;
     }
 
-    public List<FoodItem> getItems() {
+    public List<Food_item> getItems() {
         return foodItems;
     }
 
-    public void setItems(List<FoodItem> items) {
+    public void setItems(List<Food_item> items) {
         this.foodItems = items;
     }
 
