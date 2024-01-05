@@ -1,5 +1,6 @@
 package com.example.fromfridgetoplate.logic.dao;
 
+import com.example.fromfridgetoplate.logic.bean.RiderPrefBean;
 import com.example.fromfridgetoplate.logic.model.OrderList;
 import com.example.fromfridgetoplate.logic.model.Rider;
 import com.example.fromfridgetoplate.patterns.factory.DAOFactory;
@@ -16,11 +17,11 @@ public class RiderDAOTest {
         DAOFactory daoFactory = new DAOFactory();
 
         RiderDAO riderDao = daoFactory.getRidersDAO();
-
+        RiderPrefBean rp_bean = new RiderPrefBean("New York");
 
         try {
             // Ottieni la lista dei rider disponibili
-            List<Rider> availableRiders = riderDao.getAvailableRiders();
+            List<Rider> availableRiders = riderDao.getAvailableRiders(rp_bean);
 
             // Stampa i dettagli dei rider
             for (Rider rider : availableRiders) {

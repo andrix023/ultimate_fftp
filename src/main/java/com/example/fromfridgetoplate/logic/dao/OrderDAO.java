@@ -1,5 +1,6 @@
 package com.example.fromfridgetoplate.logic.dao;
 
+import com.example.fromfridgetoplate.logic.bean.OrderBean;
 import com.example.fromfridgetoplate.logic.model.Food_item;
 import com.example.fromfridgetoplate.logic.model.Order;
 import com.example.fromfridgetoplate.logic.model.OrderList;
@@ -39,12 +40,17 @@ public class OrderDAO {
 
                 Order order = new Order(
                         order_id,
-                        rs.getInt("NegozioId"),
                         rs.getInt("CustomerId"),
+                        rs.getString("NegozioId"),
+                        "pronto",
                         new ArrayList<>(), //  gli 'Item' saramno gestiti poi in modo separato
                         rs.getTimestamp("orderTime").toLocalDateTime(),
-                        rs.getTimestamp("deliveryTime").toLocalDateTime()
-                );
+                        //rs.getTimestamp("deliveryTime").toLocalDateTime(), da impostare in seguito, non al momento della creazione
+                        rs.getString("shippingStreet"),
+                        rs.getInt("shippingStreetNumber"),
+                        rs.getString("shippingCity"),
+                        rs.getString("shippingProvince"));
+
                 order.setStatus(rs.getString("status")); // questo serve solo per vedere se prende gli ordini pronti
                 order.setIsAcceptedByRider(rs.getBoolean("isAcceptedByRider")); // da moddare
                 // Impostare altri campi x futuro se serve
@@ -99,6 +105,22 @@ public class OrderDAO {
     }
 
 
+
+
+    public void update_availability(OrderBean orderBean) {
+        CallableStatement cstmt = null;
+
+        try {
+            cstmt = connection.prepareCall("{CALL UpdateOrderStatus(?)}");
+            cstmt.setInt(1, orderBean.getOrderId());
+            cstmt.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            // Gestione delle eccezioni
+        } finally {
+            closeQuietly(cstmt);
+        }
+    }
 
 
 

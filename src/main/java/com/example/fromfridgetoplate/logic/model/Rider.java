@@ -9,6 +9,7 @@ public class Rider extends User{
     private String name;
     private String surname;
     private boolean isAvailable;
+
     private String assignedCity;
 
     public int getId() {

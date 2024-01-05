@@ -1,5 +1,6 @@
 package com.example.fromfridgetoplate.logic.dao;
 
+import com.example.fromfridgetoplate.logic.bean.RiderPrefBean;
 import com.example.fromfridgetoplate.logic.model.Rider;
 
 import java.sql.CallableStatement;
@@ -18,13 +19,16 @@ public class RiderDAO {
     }
 
     // Metodo per ottenere i rider disponibili
-    public List<Rider> getAvailableRiders() {
+    public List<Rider> getAvailableRiders(RiderPrefBean rpBean) {
         List<Rider> availableRiders = new ArrayList<>();
         CallableStatement cstmt = null;
         ResultSet rs = null;
 
         try {
-            cstmt = connection.prepareCall("{CALL GetAvailableRiders()}");
+            cstmt = connection.prepareCall("{CALL GetAvailableRiders(?)}");// la stored procedure ritornerà un result_set con
+            // i riders operanti in quella città(indiciata da pBean.getCity())
+            cstmt.setString(1, rpBean.getCity());
+
             rs = cstmt.executeQuery();
 
             while (rs.next()) {
@@ -53,6 +57,15 @@ public class RiderDAO {
         return availableRiders;
     }
 
+    //public void updateA
+
+
+
+
+
+
+
+
     // Metodo per chiudere le risorse in modo sicuro
     void closeQuietly(AutoCloseable resource) {
         if (resource != null) {
@@ -64,6 +77,13 @@ public class RiderDAO {
             }
         }
     }
+
+
+
+
+
+
+
 }
 
 

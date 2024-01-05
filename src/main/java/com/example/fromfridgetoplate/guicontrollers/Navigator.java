@@ -22,7 +22,7 @@ public class Navigator {
     }
     public void goTo(String fxmlString) throws IOException {
         Parent fxmlLoader = FXMLLoader.load(Objects.requireNonNull(getClass().getResource(fxmlString)));
-        Scene scene = new Scene(fxmlLoader, 800, 800);
+        Scene scene = new Scene(fxmlLoader, 850, 800);
         stage.setScene(scene);
         stage.show();
     }

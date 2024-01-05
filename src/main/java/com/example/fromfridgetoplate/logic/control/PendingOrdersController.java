@@ -3,17 +3,19 @@ package com.example.fromfridgetoplate.logic.control;
 import com.example.fromfridgetoplate.logic.bean.OrderBean;
 import com.example.fromfridgetoplate.logic.bean.OrderListBean;
 import com.example.fromfridgetoplate.logic.bean.RiderBean;
+import com.example.fromfridgetoplate.logic.bean.RiderPrefBean;
 import com.example.fromfridgetoplate.logic.dao.OrderDAO;
 import com.example.fromfridgetoplate.logic.dao.RiderDAO;
 import com.example.fromfridgetoplate.logic.model.Food_item;
 import com.example.fromfridgetoplate.logic.model.Order;
 import com.example.fromfridgetoplate.logic.model.OrderList;
 import com.example.fromfridgetoplate.logic.model.Rider;
-import com.example.fromfridgetoplate.patterns.factory.BaseDAO;
 import com.example.fromfridgetoplate.patterns.factory.DAOFactory;
 
 import java.util.ArrayList;
 import java.util.List;
+
+
 
 public class PendingOrdersController {
     // Metodo per ottenere un OrderListBean con gli ordini pendenti
@@ -58,6 +60,7 @@ public class PendingOrdersController {
         orderBean.setCustomerId(order.getCustomerId());
         orderBean.setFoodItems(order.getItems()); //  getItems() restituisca una lista di food_item
         orderBean.setOrderTime(order.getOrderTime());
+        orderBean.setShippingCity(order.getShippingCity());
 
         return orderBean;
     }
@@ -89,14 +92,27 @@ public class PendingOrdersController {
             }
             System.out.println("-------------------------------------");
         }
+
+        RiderPrefBean rpb = new RiderPrefBean("New York");
+        List<RiderBean> avRidersBean = controller.getAvalaibleRiders(rpb);
+        // Stampa i dettagli dei rider
+        for (RiderBean rider_bean : avRidersBean) {
+            System.out.println("Rider ID: " + rider_bean.getId() +
+                    ", Name: " + rider_bean.getName() +
+                    ", Surname: " + rider_bean.getSurname() +
+                    ", Assigned City: " + rider_bean.getAssignedCity());
+        }
+
+
+
     }
 
-    public List<RiderBean> getAvalaibleRiders() {
+    public List<RiderBean> getAvalaibleRiders(RiderPrefBean riderPrefBean) {
 
         // Chiamata al DAO per ottenere la lista di ordini pendenti
         DAOFactory daoFactory = new DAOFactory();
         RiderDAO riderDao = daoFactory.getRidersDAO();
-        List<Rider> availableRiders = riderDao.getAvailableRiders();
+        List<Rider> availableRiders = riderDao.getAvailableRiders(riderPrefBean);
         List<RiderBean> avRidersBean = new ArrayList<>();
         // bisogna convertire  List <Rider> in List <RiderBean>
         for (Rider rider : availableRiders) {
@@ -104,7 +120,7 @@ public class PendingOrdersController {
             avRidersBean.add(convertToRiderBean(rider));
 
         }
-        return null;
+        return avRidersBean;
 
     }
 

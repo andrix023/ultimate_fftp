@@ -8,8 +8,7 @@ public class Food_item {
         private double quantity;
         private String unit; // es. kg, litri, ecc., forse una enum
 
-        // Costruttore, getter e setter
-        // ...
+
 
         public Food_item(String name, double qnt){
                 this.name = name;

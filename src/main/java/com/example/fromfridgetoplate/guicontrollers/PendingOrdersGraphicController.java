@@ -1,8 +1,11 @@
 package com.example.fromfridgetoplate.guicontrollers;
 
 
+import com.example.fromfridgetoplate.logic.bean.RiderBean;
+import com.example.fromfridgetoplate.logic.dao.OrderDAO;
 import com.example.fromfridgetoplate.logic.model.Food_item;
 import com.example.fromfridgetoplate.logic.model.Rider;
+import com.example.fromfridgetoplate.patterns.factory.DAOFactory;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -36,12 +39,15 @@ public class PendingOrdersGraphicController extends GenericGraphicController  {
     @FXML
     private TableColumn<OrderBean, Void> detailsColumn;
 
+
     @FXML
     private TableColumn<OrderBean, Integer> orderIdColumn;
     @FXML
     private TableColumn<OrderBean, Integer> customerIdColumn;
     @FXML
     private TableColumn<OrderBean, LocalDateTime> orderTimeColumn;
+    @FXML
+    private TableColumn<OrderBean, String> shippingCityColumn;
 
 
     /*
@@ -56,19 +62,56 @@ public class PendingOrdersGraphicController extends GenericGraphicController  {
 
     @FXML  // Questo metodo viene chiamato quando si clicca sul pulsante per cercare i rider
     void search_riders(ActionEvent event) throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("SearchRidersGraphicController.fxml"));
-        Parent root = loader.load();
+        OrderBean selectedOrder = ordersTable.getSelectionModel().getSelectedItem();
+        if (selectedOrder != null) {
+            String shippingCity = selectedOrder.getShippingCity(); // prendiamo un riferimento alla città in cui deve essere consegnato l'ordine,
 
-        SearchRidersGraphicController searchRidersController = loader.getController();
+            System.out.println("city dopo aver cliccatto search riders: " + shippingCity);
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("searchRiders.fxml"));
+            Parent root = loader.load();
 
-        // qui prima del cambio di scena, prendiamo un instanza del controller grafico di searchRiders, e gli settiamo
-        // un listener che ha un
-        searchRidersController.setRiderSelectionListener(new RiderSelectionListener());
+            SearchRidersGraphicController searchRidersGController = loader.getController();
+            searchRidersGController.setAssignedCity(shippingCity);
+            searchRidersGController.setRiderSelectionListener(new RiderSelectionListener());
+            searchRidersGController.loadData(); // Carica i dati nella TableView relativa alla scelta del rider
 
-        Stage stage = new Stage();
-        stage.setScene(new Scene(root));
-        stage.show();
+
+            Stage currentStage = (Stage) ordersTable.getScene().getWindow();
+            currentStage.setScene(new Scene(root));
+
+            // risiamo qua quando il controller grafico SearchRidersGraphicController ha finito il suo compito(prima di terminare
+            // chiama onRiderSelected() di RiderSelectionListener,
+            // e quando ha finito chiude la sua scena da solo:
+
+
+            //--------------------------------
+            // qua bisogna chiamare un metodo del controller applicativo, in modo che contatti RiderDao e OrderDao in modo che :
+            //             - RiderDao vada a rimuovere il rider cha ha accettato l'ordine , impostando che non è piu disponibile
+            // anche se questo poi andrà fatto da un metodo relativo all'interfaccia del rider, che una volta
+            // ricevuta la notifica, e averla accettat dovrà impostare il suo status da "disponibile"->"occupato".
+            // Effettuata la consegna, lo reimpostera da "occupato" a "disponibile"
+            // - OrderDao vada a cambiare lo stato dell' ordine da "pronto" -> "in consegna"
+
+            // tanto per mettiamo per ora l'aggiornamento chiamando la dao qua, poi andra fatto dall AController
+            DAOFactory daoFactory = new DAOFactory();
+            OrderDAO order_dao = daoFactory.getOrderDAO();
+            order_dao.update_availability(selectedOrder);
+
+            System.out.println("Fine metodo search_riders");
+
+
+
+        } else {
+            // caso in cui nessuna riga è selezionata
+            //System.out.println("Nessuna riga selezionata");
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("Selezione mancante");
+            alert.setHeaderText("Attenzione:");
+            alert.setContentText("Per favore, seleziona un ordine prima di cercare i rider.");
+            alert.showAndWait();
+        }
     }
+
 
 
 
@@ -90,6 +133,7 @@ public class PendingOrdersGraphicController extends GenericGraphicController  {
         orderIdColumn.setCellValueFactory(new PropertyValueFactory<>("orderId"));
         customerIdColumn.setCellValueFactory(new PropertyValueFactory<>("customerId"));
         orderTimeColumn.setCellValueFactory(new PropertyValueFactory<>("orderTime"));
+        shippingCityColumn.setCellValueFactory(new PropertyValueFactory<>("shippingCity"));
         // quindi con "orderIdColumn.setCellValueFactory(new PropertyValueFactory<>("orderId"));"
         // linko la colonna "orderId" della tableView al valore dell'attributo "orderId" , passato a
         // PropertyValueFactory
@@ -138,7 +182,7 @@ public class PendingOrdersGraphicController extends GenericGraphicController  {
                     updateTableView();
                 });
             }
-        }, 0, 5000); // Aggiorna ogni 5 secondi
+        }, 0, 15000); // Aggiorna ogni 15 secondi
     }
 
 
@@ -146,10 +190,6 @@ public class PendingOrdersGraphicController extends GenericGraphicController  {
         ObservableList<OrderBean> updatedList = FXCollections.observableArrayList(orderListBean.getOrderBeans());
         ordersTable.setItems(updatedList);
     }
-
-
-
-
 
 
 }
@@ -225,10 +265,24 @@ class DetailButtonCell extends TableCell<OrderBean, Void> {
 
 
 class RiderSelectionListener {
-    void onRiderSelected(Rider selectedRider) {
-        // Gestisci il rider selezionato qui
-        System.out.println("Rider selezionato: " + selectedRider.getName());
-        // Aggiorna la tua UI o effettua ulteriori operazioni qui
+
+    void onRiderSelected(RiderBean selectedRiderBean) {
+
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        System.out.println("L'ordine è stato preso in carico dal rider : " + selectedRiderBean.getName());
+        //Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Conferma Assegnazione Rider");
+        alert.setHeaderText("Assegnazione Rider Completata");
+        alert.setContentText("L'ordine è stato preso in carico dal rider:\n" +
+                    "Nome: " + selectedRiderBean.getName() + "\n" +
+                    "Cognome: " + selectedRiderBean.getSurname() + "\n" +
+                    "Città Assegnata: " + selectedRiderBean.getAssignedCity());
+        alert.showAndWait();
+
+
+
+
+
     }
 
 }

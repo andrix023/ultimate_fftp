@@ -9,7 +9,7 @@ public class Order {
 
     private int customerId;
 
-    private int retailerId;
+    private String retailerId;
 
     private int riderId;
 
@@ -25,20 +25,25 @@ public class Order {
 
     private String shippingStreet;
     private int shippingStreetNumber;
+
     private String shippingCity;
     private String shippingProvince;
 
 
-    // Costruttore
-    public Order(int orderId, int customerId, int retailerId, List<Food_item> items, LocalDateTime orderTime, LocalDateTime deliveryTime) {
+
+    public Order(int orderId, int customerId, String retailerId, String status, List<Food_item> foodItems, LocalDateTime orderTime,String shippingStreet, int shippingStreetNumber, String shippingCity, String shippingProvince) {
         this.orderId = orderId;
         this.customerId = customerId;
         this.retailerId = retailerId;
-        this.foodItems = items;
+        this.status = status;
+        this.foodItems = foodItems;
         this.orderTime = orderTime;
-        this.status = "Pending";
-        this.isAcceptedByRider = false;
+        this.shippingStreet = shippingStreet;
+        this.shippingStreetNumber = shippingStreetNumber;
+        this.shippingCity = shippingCity;
+        this.shippingProvince = shippingProvince;
     }
+
 
     // Metodi getter e setter
     public int getOrderId() {
@@ -57,11 +62,11 @@ public class Order {
         this.customerId = customerId;
     }
 
-    public int getRetailerId() {
+    public String getRetailerId() {
         return retailerId;
     }
 
-    public void setRetailerId(int retailerId) {
+    public void setRetailerId(String retailerId) {
         this.retailerId = retailerId;
     }
 
@@ -111,6 +116,14 @@ public class Order {
 
     public void setAcceptedByRider(boolean acceptedByRider) {
         isAcceptedByRider = acceptedByRider;
+    }
+
+    public String getShippingCity() {
+        return shippingCity;
+    }
+
+    public void setShippingCity(String shippingCity) {
+        this.shippingCity = shippingCity;
     }
 
 
