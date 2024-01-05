@@ -93,9 +93,10 @@ public class PendingOrdersGraphicController extends GenericGraphicController  {
             // - OrderDao vada a cambiare lo stato dell' ordine da "pronto" -> "in consegna"
 
             // tanto per mettiamo per ora l'aggiornamento chiamando la dao qua, poi andra fatto dall AController
-            DAOFactory daoFactory = new DAOFactory();
-            OrderDAO order_dao = daoFactory.getOrderDAO();
-            order_dao.update_availability(selectedOrder);
+            PendingOrdersController poController = new PendingOrdersController();
+            selectedOrder.setStatus("in consegna");
+            poController.update_orderStatus(selectedOrder);
+
 
             System.out.println("Fine metodo search_riders");
 
@@ -151,7 +152,7 @@ public class PendingOrdersGraphicController extends GenericGraphicController  {
     }
 
 
-    public void loadData() {
+    private void loadData() {
         // Chiama il controller applicativo per ottenere i dati
         PendingOrdersController pendingOrdersControl = new PendingOrdersController();
         OrderListBean orderListBean = pendingOrdersControl.getPendingOrderListBean();

@@ -29,16 +29,16 @@ public class PendingOrdersController {
         //BaseDAO<Void, OrderList> order_dao = daoFactory.getOrderDAO();
         //OrderList orderList = order_dao.get(null);
 
-        // Creazione di un nuovo OrderListBean
+
         OrderListBean orderListBean = new OrderListBean();
 
         // Creazione di una nuova lista vuota per gli OrderBean
         List<OrderBean> orderBeans = new ArrayList<>();
 
-        // Ottieni la lista degli ordini dall'OrderList
+        // Ottieniamo la lista degli ordini dall'OrderList
         List<Order> orders = orderList.getOrders();
 
-        // Itera su ciascun ordine e converte ciascuno in OrderBean
+
         for (Order order : orders) {
             OrderBean orderBean = convertToOrderBean(order);
             orderBeans.add(orderBean);
@@ -73,38 +73,10 @@ public class PendingOrdersController {
      * dei dati tra la logica di business e la parte grafica (Bean OrderBean).
      **/
 
-
-    // main per provare se i dati sono giusti prima di passarli alla view
-    public static void main(String[] args) {
-        PendingOrdersController controller = new PendingOrdersController();
-        OrderListBean orderListBean = controller.getPendingOrderListBean();
-
-        for (OrderBean orderBean : orderListBean.getOrderBeans()) {
-            // Stampa i dettagli di base di ogni OrderBean
-            System.out.println("Order ID: " + orderBean.getOrderId());
-            System.out.println("Customer ID: " + orderBean.getCustomerId());
-            System.out.println("Order Time: " + orderBean.getOrderTime());
-
-            // Stampa gli food_items per l'ordine
-            System.out.println("Food Items per l'ordine con order_id " + orderBean.getOrderId() + " :");
-            for (Food_item item : orderBean.getFoodItems()) {
-                System.out.println(" - Name: " + item.getName() + ", Quantity: " + item.getQuantity());
-            }
-            System.out.println("-------------------------------------");
-        }
-
-        RiderPrefBean rpb = new RiderPrefBean("New York");
-        List<RiderBean> avRidersBean = controller.getAvalaibleRiders(rpb);
-        // Stampa i dettagli dei rider
-        for (RiderBean rider_bean : avRidersBean) {
-            System.out.println("Rider ID: " + rider_bean.getId() +
-                    ", Name: " + rider_bean.getName() +
-                    ", Surname: " + rider_bean.getSurname() +
-                    ", Assigned City: " + rider_bean.getAssignedCity());
-        }
-
-
-
+    public void update_orderStatus (OrderBean order_bean){
+        DAOFactory daoFactory = new DAOFactory();
+        OrderDAO order_dao = daoFactory.getOrderDAO();
+        order_dao.update_availability(order_bean);
     }
 
     public List<RiderBean> getAvalaibleRiders(RiderPrefBean riderPrefBean) {
@@ -138,6 +110,41 @@ public class PendingOrdersController {
         );
         riderBean.setId(rider.getId());
         return riderBean;
+    }
+
+
+
+    // main per provare se i dati sono giusti prima di passarli alla view
+    public static void main(String[] args) {
+        PendingOrdersController controller = new PendingOrdersController();
+        OrderListBean orderListBean = controller.getPendingOrderListBean();
+
+        for (OrderBean orderBean : orderListBean.getOrderBeans()) {
+
+            System.out.println("Order ID: " + orderBean.getOrderId());
+            System.out.println("Customer ID: " + orderBean.getCustomerId());
+            System.out.println("Order Time: " + orderBean.getOrderTime());
+
+            // Stampa gli food_items per l'ordine
+            System.out.println("Food Items per l'ordine con order_id " + orderBean.getOrderId() + " :");
+            for (Food_item item : orderBean.getFoodItems()) {
+                System.out.println(" - Name: " + item.getName() + ", Quantity: " + item.getQuantity());
+            }
+            System.out.println("-------------------------------------");
+        }
+
+        RiderPrefBean rpb = new RiderPrefBean("New York");
+        List<RiderBean> avRidersBean = controller.getAvalaibleRiders(rpb);
+
+        for (RiderBean rider_bean : avRidersBean) {
+            System.out.println("Rider ID: " + rider_bean.getId() +
+                    ", Name: " + rider_bean.getName() +
+                    ", Surname: " + rider_bean.getSurname() +
+                    ", Assigned City: " + rider_bean.getAssignedCity());
+        }
+
+
+
     }
 
 }

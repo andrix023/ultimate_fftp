@@ -13,14 +13,21 @@ public class OrderBean {
     private LocalDateTime orderTime;
     private String shippingCity;
 
+    private String status;
 
-
-    // Costruttore
-    public OrderBean() {
-        // Costruttore di default
+    public String getStatus() {
+        return status;
     }
 
-    // Metodi getter e setter per ciascun campo
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public OrderBean() {
+
+    }
+
+
     public int getOrderId() {
         return orderId;
     }

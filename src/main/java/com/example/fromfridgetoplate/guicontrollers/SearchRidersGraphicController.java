@@ -165,7 +165,7 @@ public class SearchRidersGraphicController extends GenericGraphicController {
 
 
     public void loadData() {
-        // Chiama il controller applicativo per ottenere i dati
+        // Chiamiamo prima il controller applicativo per ottenere i dati
         PendingOrdersController pendingOrdersControl = new PendingOrdersController();
         RiderPrefBean riderPrefBean = new RiderPrefBean(assignedCity);
         System.out.println("assigned city :" + assignedCity);
@@ -189,16 +189,16 @@ public class SearchRidersGraphicController extends GenericGraphicController {
 
     // per provare se ji dati sono giusti
     public static void main(String[] args) {
-        // Creazione di un'istanza del controller (simulazione)
+
         SearchRidersGraphicController controller = new SearchRidersGraphicController();
 
-        // Simulazione del settaggio della città assegnata
+
         controller.setAssignedCity("Milano");
 
-        // Ottenimento dei rider disponibili
+
         List<RiderBean> availableRiders = controller.pippo();
 
-        // Stampa dei rider disponibili
+
         for (RiderBean rider : availableRiders) {
             System.out.println("ID: " + rider.getId() + ", Nome: " + rider.getName() +
                     ", Cognome: " + rider.getSurname() + ", Città: " + rider.getAssignedCity());

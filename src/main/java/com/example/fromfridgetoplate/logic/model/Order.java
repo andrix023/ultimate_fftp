@@ -13,7 +13,7 @@ public class Order {
 
     private int riderId;
 
-    private String status; // "Pending", "Accepted", "Delivered"........altri?
+    private String status; // "Pending", "Accepted", "Delivered"........altri? dovrebbe essere un enum
 
     private List<Food_item> foodItems; // Una lista degli ingredienti alimentari ordinati
 
